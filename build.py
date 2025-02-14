@@ -106,15 +106,17 @@ class RemoteConfigurations:
         self._write_v2(outputdir / "v2")
 
     def _write_v1(self, outputdir):
-        self._validate_config_v1_aginst_schema()
         logger.info("Writing v1 configs")
         outputdir.mkdir(parents=True, exist_ok=True)
         self._write_configs(outputdir, self.configs_v1)
+        self._validate_config_v1_aginst_schema()
 
     def _validate_config_v1_aginst_schema(self):
         registry = Registry(retrieve=retrieve_schema)
         # Logging the base URI for the schema directory
-        logger.info("Validation of generated rules.json against schema")
+        logger.info(
+            f"Validating generated file against remote_configuration_v1.schema : {Path(os.path.abspath('schemas')) + '/remote_configuration_v1.schema.json'}"
+        )
 
         try:
             jsonschema.validate(
@@ -124,10 +126,10 @@ class RemoteConfigurations:
             )
             logger.info("Validation successful.")
         except jsonschema.ValidationError as e:
-            logger.error(f"❌ JSON validation error: {e.message}")
+            logger.critical(f"❌ JSON validation error: {e.message}")
             exit(e)
         except jsonschema.SchemaError as e:
-            logger.error(f"❌ Schema error: {e.message}")
+            logger.critical(f"❌ Schema error: {e.message}")
             exit(e)
 
     def _write_v2(self, outputdir):
