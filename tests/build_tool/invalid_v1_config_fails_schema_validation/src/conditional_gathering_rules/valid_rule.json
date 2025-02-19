@@ -10,7 +10,7 @@
   "gathering_functions": {
     "logs_of_namespace": {
       "namespace": "openshift-sample-a2",
-      "tail_lines": "100"
+      "tail_lines": 100
     }
   }
 }
