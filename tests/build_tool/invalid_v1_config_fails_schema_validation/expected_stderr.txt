@@ -1,0 +1,1 @@
+jsonschema.exceptions.ValidationError: 'Very bad rule' does not match '^[a-zA-Z0-9_]{1,128}$'
